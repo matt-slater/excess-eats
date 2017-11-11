@@ -12,20 +12,23 @@ public class Eats {
     private String description;
 
     @ManyToOne()
+    @JoinColumn(name = "producer_id")
     private Producer producer;
 
     private Date expires;
     private boolean expired;
     private double price;
+    private double discount;
 
     public Eats() {}
 
-    public Eats(String description, Producer producer, Date expires, boolean expired, double price) {
+    public Eats(String description, Producer producer, Date expires, boolean expired, double price, double discount) {
         this.description = description;
         this.producer = producer;
         this.expires = expires;
         this.expired = expired;
         this.price = price;
+        this.discount = discount;
     }
 
     public long getId() {
@@ -76,12 +79,20 @@ public class Eats {
         this.price = price;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
     @Override
     public String toString() {
         return "Eats{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", producer=" + producer.getName() +
+                ", producer=" + producer.getName()  +
                 ", expires=" + expires +
                 ", expired=" + expired +
                 ", price=" + price +

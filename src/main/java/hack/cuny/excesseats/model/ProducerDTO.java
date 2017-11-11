@@ -1,36 +1,24 @@
 package hack.cuny.excesseats.model;
 
-
-import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
+public class ProducerDTO {
 
-@Entity
-@Table(name = "producer")
-public class Producer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String address;
     private String phone;
     private String hours;
+    private List<EatsDTO> eats;
 
-    @OneToMany(mappedBy = "producer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Eats> eats;
-
-    public Producer() {}
-
-    public Producer(String name) {
-        this.name = name;
-    }
-
-    public Producer(String name, String address, String phone, String hours) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.hours = hours;
+    public ProducerDTO(Producer producer) {
+        id = producer.getId();
+        name = producer.getName();
+        address = producer.getAddress();
+        phone = producer.getPhone();
+        hours = producer.getHours();
+        eats = producer.getEats().stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
     }
 
     public long getId() {
@@ -73,20 +61,11 @@ public class Producer {
         this.hours = hours;
     }
 
-    public List<Eats> getEats() {
+    public List<EatsDTO> getEats() {
         return eats;
     }
 
-    public void setEats(List<Eats> eats) {
+    public void setEats(List<EatsDTO> eats) {
         this.eats = eats;
-    }
-
-    @Override
-    public String toString() {
-        return "Producer{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", hours='" + hours ;
     }
 }
