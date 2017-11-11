@@ -21,7 +21,7 @@ public class EatsDTO {
         expires = eats.getExpires();
         price = eats.getPrice();
         discount = eats.getDiscount();
-        discountedPrice = eats.getPrice()*eats.getDiscount();
+        discountedPrice = eats.getPrice()*(1-eats.getDiscount());
         producerId = eats.getProducer().getId();
     }
 

@@ -1,5 +1,7 @@
 package hack.cuny.excesseats.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,7 +13,8 @@ public class Eats {
     private long id;
     private String description;
 
-    @ManyToOne()
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
@@ -29,6 +32,15 @@ public class Eats {
         this.expired = expired;
         this.price = price;
         this.discount = discount;
+    }
+
+    public Eats(EatsPostDTO eatsDTO, Producer producer) {
+        this.description = eatsDTO.getDescription();
+        this.producer = producer;
+        this.expires = eatsDTO.getExpires();
+        this.expired = eatsDTO.isExpired();
+        this.price = eatsDTO.getPrice();
+        this.discount = eatsDTO.getDiscount();
     }
 
     public long getId() {

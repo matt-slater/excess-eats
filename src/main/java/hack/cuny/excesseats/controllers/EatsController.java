@@ -2,7 +2,10 @@ package hack.cuny.excesseats.controllers;
 
 import hack.cuny.excesseats.model.Eats;
 import hack.cuny.excesseats.model.EatsDTO;
+import hack.cuny.excesseats.model.EatsPostDTO;
+import hack.cuny.excesseats.model.Producer;
 import hack.cuny.excesseats.repos.EatsRepo;
+import hack.cuny.excesseats.repos.ProducerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +19,11 @@ import java.util.stream.Collectors;
 public class EatsController {
 
     private final EatsRepo eatsRepo;
+    private final ProducerRepo producerRepo;
 
     @Autowired
-    EatsController(EatsRepo eatsRepo) {
+    EatsController(EatsRepo eatsRepo, ProducerRepo producerRepo) {
+        this.producerRepo = producerRepo;
         this.eatsRepo = eatsRepo;
     }
 
@@ -39,6 +44,12 @@ public class EatsController {
     EatsDTO findOne(@PathVariable("id") long id) {
         Eats e = eatsRepo.findById(id);
         return new EatsDTO(e);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value="/producer/{producerId}")
+    Eats addOne(@PathVariable long producerId, @RequestBody EatsPostDTO dto) {
+        Producer p = producerRepo.findById(producerId);
+        return eatsRepo.save(new Eats(dto, p));
     }
 
 }
