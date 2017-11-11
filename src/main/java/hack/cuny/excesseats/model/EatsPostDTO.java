@@ -1,13 +1,10 @@
 package hack.cuny.excesseats.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 public class EatsPostDTO {
     private String description;
     private boolean expired;
-    
     private Date expires;
     private double price;
     private double discount;
