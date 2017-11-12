@@ -52,4 +52,32 @@ public class EatsController {
         return eatsRepo.save(new Eats(dto, p));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/upvote/{id}")
+    Eats upvote(@PathVariable long id) {
+        Eats e = eatsRepo.findById(id);
+        long rating = e.getRating();
+        e.setRating(rating + 1);
+        return eatsRepo.save(e);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/downvote/{id}")
+    Eats downvote(@PathVariable long id) {
+        Eats e = eatsRepo.findById(id);
+        long rating = e.getRating();
+        e.setRating(rating - 1);
+        return eatsRepo.save(e);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/order/rating")
+    List<EatsDTO> findAllOrderByRating() {
+        List<Eats>  list = eatsRepo.findAllByOrderByRatingDesc();
+        return list.stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/order/expires")
+    List<EatsDTO> findAllOrderByExpires() {
+        List<Eats>  list = eatsRepo.findAllByOrderByExpiresDesc();
+        return list.stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
+    }
+
 }

@@ -33,6 +33,12 @@ GET /eats/{id}
 GET /eats/producer/{id}
 	returns an array of eats with producerId = {id}.
 
+GET /eats/order/rating
+	returns an array of eats ordered by rating in descending order.
+
+GET /eats/order/expires
+	returns an array of eats ordered by expiration date in descending order.
+
 POST /eats/producer/{id}
 	adds an eat to the DB that belongs to the producer
 	with producerId of {id}:

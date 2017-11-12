@@ -22,16 +22,18 @@ public class Eats {
     private boolean expired;
     private double price;
     private double discount;
+    private long rating;
 
     public Eats() {}
 
-    public Eats(String description, Producer producer, Date expires, boolean expired, double price, double discount) {
+    public Eats(String description, Producer producer, Date expires, boolean expired, double price, double discount, long rating) {
         this.description = description;
         this.producer = producer;
         this.expires = expires;
         this.expired = expired;
         this.price = price;
         this.discount = discount;
+        this.rating = rating;
     }
 
     public Eats(EatsPostDTO eatsDTO, Producer producer) {
@@ -41,6 +43,7 @@ public class Eats {
         this.expired = eatsDTO.isExpired();
         this.price = eatsDTO.getPrice();
         this.discount = eatsDTO.getDiscount();
+
     }
 
     public long getId() {
@@ -97,6 +100,14 @@ public class Eats {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public void setRating(long rating) {
+        this.rating = rating;
     }
 
     @Override
