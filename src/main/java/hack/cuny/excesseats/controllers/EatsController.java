@@ -1,15 +1,14 @@
 package hack.cuny.excesseats.controllers;
 
-import hack.cuny.excesseats.model.Eats;
-import hack.cuny.excesseats.model.EatsDTO;
-import hack.cuny.excesseats.model.EatsPostDTO;
-import hack.cuny.excesseats.model.Producer;
+import hack.cuny.excesseats.model.*;
 import hack.cuny.excesseats.repos.EatsRepo;
 import hack.cuny.excesseats.repos.ProducerRepo;
+import hack.cuny.excesseats.services.GoogleMapsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +19,13 @@ public class EatsController {
 
     private final EatsRepo eatsRepo;
     private final ProducerRepo producerRepo;
+    private final GoogleMapsService googleMapsService;
 
     @Autowired
-    EatsController(EatsRepo eatsRepo, ProducerRepo producerRepo) {
+    EatsController(EatsRepo eatsRepo, ProducerRepo producerRepo, GoogleMapsService googleMapsService) {
         this.producerRepo = producerRepo;
         this.eatsRepo = eatsRepo;
+        this.googleMapsService = googleMapsService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -43,6 +44,7 @@ public class EatsController {
     @RequestMapping(method = RequestMethod.GET, value ="/{id}")
     EatsDTO findOne(@PathVariable("id") long id) {
         Eats e = eatsRepo.findById(id);
+        System.out.println(googleMapsService.getDistance(e, "1297 Rogers Avenue Brooklyn, NY"));
         return new EatsDTO(e);
     }
 
@@ -78,6 +80,30 @@ public class EatsController {
     List<EatsDTO> findAllOrderByExpires() {
         List<Eats>  list = eatsRepo.findAllByOrderByExpiresDesc();
         return list.stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
+
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/order/distance")
+    List<EatsDTO> findAllOrderByDistance(@RequestBody AddressPost address) {
+        List<Eats>  list = eatsRepo.findAll();
+        for (Eats e : list) {
+            DistanceTuple dt = googleMapsService.getDistance(e, address.getAddress() );
+            e.setDistanceString(dt.getHumanReadable());
+            e.setDistance(dt.getDistance());
+        }
+        Collections.sort(list, new DistanceComparator());
+
+        return list.stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/order/price")
+    List<EatsDTO> findAllSortByPrice() {
+        List<Eats>  list = eatsRepo.findAll();
+        List<EatsDTO> dtos = list.stream().map(eat -> new EatsDTO(eat)).collect(Collectors.toList());
+        Collections.sort(dtos, new PriceComparator());
+        return dtos;
+    }
+
 
 }

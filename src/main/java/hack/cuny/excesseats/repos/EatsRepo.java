@@ -14,4 +14,5 @@ public interface EatsRepo extends PagingAndSortingRepository<Eats, Long> {
     Eats findById(long id);
     List<Eats> findAllByOrderByRatingDesc();
     List<Eats> findAllByOrderByExpiresDesc();
+
 }

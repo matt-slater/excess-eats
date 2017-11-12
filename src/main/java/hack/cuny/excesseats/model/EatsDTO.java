@@ -14,6 +14,8 @@ public class EatsDTO {
     private double discountedPrice;
     private String imgUrl;
     private long rating;
+    private String distanceString;
+    private double distance;
 
     public EatsDTO(Eats eats) {
         id = eats.getId();
@@ -27,6 +29,8 @@ public class EatsDTO {
         producerId = eats.getProducer().getId();
         imgUrl = "img/" + id + ".jpg";
         rating = eats.getRating();
+        distanceString = eats.getDistanceString();
+        distance = eats.getDistance();
     }
 
     public EatsDTO() {}
@@ -117,6 +121,22 @@ public class EatsDTO {
 
     public void setRating(long rating) {
         this.rating = rating;
+    }
+
+    public String getDistanceString() {
+        return distanceString;
+    }
+
+    public void setDistanceString(String distanceString) {
+        this.distanceString = distanceString;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override

@@ -23,6 +23,8 @@ public class Eats {
     private double price;
     private double discount;
     private long rating;
+    private String distanceString;
+    private double distance;
 
     public Eats() {}
 
@@ -108,6 +110,22 @@ public class Eats {
 
     public void setRating(long rating) {
         this.rating = rating;
+    }
+
+    public String getDistanceString() {
+        return distanceString;
+    }
+
+    public void setDistanceString(String distanceString) {
+        this.distanceString = distanceString;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override
