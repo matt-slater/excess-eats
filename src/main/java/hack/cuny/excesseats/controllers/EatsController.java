@@ -83,13 +83,14 @@ public class EatsController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/order/distance")
-    List<EatsDTO> findAllOrderByDistance(@RequestBody AddressPost address) {
+    @RequestMapping(method = RequestMethod.GET, value = "/order/distance")
+    List<EatsDTO> findAllOrderByDistance() {
         List<Eats>  list = eatsRepo.findAll();
         for (Eats e : list) {
-            DistanceTuple dt = googleMapsService.getDistance(e, address.getAddress() );
+            DistanceTuple dt = googleMapsService.getDistance(e, "22 Warrington Ave Brooklyn, NY" );
             e.setDistanceString(dt.getHumanReadable());
             e.setDistance(dt.getDistance());
+            eatsRepo.save(e);
         }
         Collections.sort(list, new DistanceComparator());
 
