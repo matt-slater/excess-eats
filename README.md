@@ -42,13 +42,15 @@ GET /eats/order/expires
 GET /eats/order/price
 	returns an array of eats ordered by price in descending order.
 
-POST /eats/order/distance
+POST /eats/order/distance: returns an array of eats ordered by distance in descending order.
+	
 	request body:
+	
 	{
 		"address": "123 Fake St, Faketown, USA"
 	}
 
-	returns an array of eats ordered by distance in descending order.
+	
 
 POST /eats/producer/{id}
 	adds an eat to the DB that belongs to the producer
