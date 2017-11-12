@@ -12,6 +12,7 @@ public class EatsDTO {
     private double price;
     private double discount;
     private double discountedPrice;
+    private String imgUrl;
 
     public EatsDTO(Eats eats) {
         id = eats.getId();
@@ -23,6 +24,7 @@ public class EatsDTO {
         discount = eats.getDiscount();
         discountedPrice = eats.getPrice()*(1-eats.getDiscount());
         producerId = eats.getProducer().getId();
+        imgUrl = "img/" + id;
     }
 
     public EatsDTO() {}
@@ -97,6 +99,14 @@ public class EatsDTO {
 
     public void setProducerId(long producerId) {
         this.producerId = producerId;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override

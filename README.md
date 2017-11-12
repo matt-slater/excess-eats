@@ -39,12 +39,12 @@ POST /eats/producer/{id}
 	POST a JSON object with this structure: 
 
 	{
-    	"id": 10,
-    	"description": "test",
-    	"expires": "2017-11-11T23:24:38.995+0000",
-    	"expired": false,
-    	"price": 45,
-    	"discount": 0.34
+		"description": "Noodles",
+		"producerId": 3,
+		"expired": false,
+		"expires": "2017-11-11T23:24:39.060+0000",
+		"price": 5,
+		"discount": 0.5
 	}
 
 
