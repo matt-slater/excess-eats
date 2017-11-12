@@ -24,7 +24,7 @@ public class EatsDTO {
         discount = eats.getDiscount();
         discountedPrice = eats.getPrice()*(1-eats.getDiscount());
         producerId = eats.getProducer().getId();
-        imgUrl = "img/" + id;
+        imgUrl = "img/" + id + ".jpg";
     }
 
     public EatsDTO() {}

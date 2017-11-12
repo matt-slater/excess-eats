@@ -25,7 +25,8 @@ GET /eats/{id}
 		expires: "2017-11-11T23:24:38.995+0000",
 		price: 2,
 		discount: 0.5,
-		discountedPrice: 1
+		discountedPrice: 1,
+		imgUrl: "img/1.jpg"
 	}
 	
 
