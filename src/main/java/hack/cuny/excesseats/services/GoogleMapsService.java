@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import javax.annotation.PostConstruct;
 
 @Service
 public class GoogleMapsService {
@@ -30,26 +30,23 @@ public class GoogleMapsService {
 
     }
 
-    public DistanceTuple getDistance(Eats e, String userAddress) {
+    @PostConstruct
+    public void init() {
         geoApiContext = new GeoApiContext.Builder()
                 .apiKey(apiKey)
                 .build();
+    }
 
+    public DistanceTuple getDistance(Eats e, String userAddress) {
         DistanceMatrix result = null;
-
-
         String eatAddress = producerRepo.findById(e.getProducer().getId()).getAddress();
         String[] origin = {userAddress};
         String[] destination = {eatAddress};
-
         try {
             result = DistanceMatrixApi.getDistanceMatrix(geoApiContext, origin, destination).units(Unit.IMPERIAL).await();
         } catch (Exception err) {
             err.printStackTrace();
         }
-
-        System.out.println("distance between " + userAddress + " and " + eatAddress + " is : " + result.rows[0].elements[0].distance.humanReadable);
-        System.out.println(result.rows[0].elements[0].distance.inMeters);
         return new DistanceTuple(result.rows[0].elements[0].distance.humanReadable, result.rows[0].elements[0].distance.inMeters);
     }
 
