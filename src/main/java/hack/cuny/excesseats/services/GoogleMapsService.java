@@ -26,7 +26,7 @@ public class GoogleMapsService {
     @Autowired
     GoogleMapsService(ProducerRepo producerRepo) {
         this.producerRepo = producerRepo;
-        System.out.println(apiKey);
+
 
     }
 
